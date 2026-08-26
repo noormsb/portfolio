@@ -60,10 +60,10 @@ Flags are made using Wikipedia images
     // 2. Define a JavaScript object for our http source and our data rows for the Living in the World grid
     var http_source = "https://upload.wikimedia.org/wikipedia/commons/";
     var living_in_the_world = [
-        {"flag": "0/01/Flag_of_California.svg", "greeting": "Homebase", "description": "California - Since 2014"},
+        {"flag": "0/01/Flag_of_California.svg", "greeting": "Homebase", "description": "California - 2014"},
         {"flag": "f/f1/Flag_of_Nevada.svg", "greeting": "Vegas", "description": "Nevada - 2020"},
-        {"flag": "b/be/Flag_of_England.svg", "greeting": "Almost Canada", "description": "Washington - 2026"},
-        {"flag": "e/ef/Flag_of_Hawaii.svg", "greeting": "The Final Frontier", "description": "Alaska - 2024"},
+        {"flag": "5/54/Flag_of_Washington.svg", "greeting": "Almost Canada", "description": "Washington - 2026"},
+        {"flag": "e/e6/Flag_of_Alaska.svg", "greeting": "The Final Frontier", "description": "Alaska - 2024"},
     ];
 
     // 3a. Consider how to update style count for size of container
@@ -97,42 +97,31 @@ Flags are made using Wikipedia images
     }
 </script>
 
-### Journey through Life
+### What I Did In These Places
 
-Here is what I did at those places
+Here's what I got up to in each state.
 
-- 🏫 Lots of Elementary Schools in Tucson, LA, Honolulu, and Glendale (CA)
-- 🏫 Middle and High School in Glendale (CA), Hoover High graduated '77
-- 🎓 Glendale CA Community College, UCLA Extension, LA Wilshire Computer Tech School '77 to '79
-- ⛪ England, London Missionary for Church of Jesus Christ of Latter-day Saints '79 to '81
-- 💼 Culver City, Glendale CA founder at Ashton-Tate, original PC's dBase 2 and 3 '82 to '87
-- 🎓 Eugene Oregon Undergraduate CompSci Degree at University of Oregon (Go Ducks!) '89 to '91
-- 💼 Eugene Oregon, founder and owner @ Microniche `88, Point Control CAD CAM developer '91 to '96
-- 🏢 San Diego CA Qualcomm, Satellite Comm and 1st Mobile OS (BREW) '96 to '19
-- 👨‍🏫 San Diego CA Teacher of Computer Science @ Del Norte High School San Diego '19 to present
+- 🏔️ California — I've lived in San Diego for 12 years. It's home, and it's also where most of my hiking happens — I love the local trails, plus trips to Yosemite and Kings Canyon National Parks.
+- 🎰 Nevada — Went to Las Vegas, saw Hoover Dam up close, and spent time at Lake Tahoe.
+- 🌲 Washington — Hiked Mt. Rainier National Park, explored more of the state's national parks, and checked out Seattle, including the Space Needle.
+- 🧊 Alaska — My favorite trip so far. Visited Denali and Kenai Fjords National Parks, took a cruise past glaciers, and landed on top of a glacier by helicopter.
 
-### Culture, Family, and Fun
+### What's Important to Me
 
-Everything for me, as for many others, revolves around family and faith.
-
-- My mother told me that I was Danish, English. and Irish, here is my researched [family tree]({{site.baseurl}}/images/about/familytree.png)
-- My family is pretty big as I have been married twice, my 1st wife passed away.  We have had 5 kids, 4 adopted by me, 1 biological.  Plus, there are three grandkids.  My name to my grandkids is Abuilito.
-- The gallery of pics has some of my family, fun, culture and faith memories.
+- 🕌 My faith — I'm Muslim, and it's a big part of who I am.
+- 👨‍👩‍👦 My family — my mom, dad, and older brother.
+- 🐱 My cat, Rumi. I had another cat, Emy, who passed away two years ago.
+- 🧪 My favorite subjects are math and science, especially chemistry — I'm aiming to become an electrical engineer.
+- ♟️ My hobbies: chess, hiking, riding my mountain bike and my electric dirt bike, and video games.
 
 <comment>
 Gallery of Pics, scroll to the right for more ...
 </comment>
 <div class="image-gallery">
-  <img src="{{site.baseurl}}/images/about/missionary.jpg" alt="Image 1">
-  <img src="{{site.baseurl}}/images/about/john_tamara.jpg" alt="Image 2">
-  <img src="{{site.baseurl}}/images/about/tamara_fam.jpg" alt="Image 3">
-  <img src="{{site.baseurl}}/images/about/surf.jpg" alt="Image 4">
-  <img src="{{site.baseurl}}/images/about/john_lora.jpg" alt="Image 5">
-  <img src="{{site.baseurl}}/images/about/lora_fam.jpg" alt="Image 6">
-  <img src="{{site.baseurl}}/images/about/lora_fam2.jpg" alt="Image 7">
-  <img src="{{site.baseurl}}/images/about/pj_party.jpg" alt="Image 8">
-  <img src="{{site.baseurl}}/images/about/trent_family.png" alt="Image 9">
-  <img src="{{site.baseurl}}/images/about/claire.jpg" alt="Image 10">
-  <img src="{{site.baseurl}}/images/about/grandkids.jpg" alt="Image 11">
-  <img src="{{site.baseurl}}/images/about/farm.jpg" alt="Image 12">
+  <img src="{{site.baseurl}}/images/about/creek.jpeg" alt="Image 1">
+  <img src="{{site.baseurl}}/images/about/green.jpeg" alt="Image 2">
+  <img src="{{site.baseurl}}/images/about/rumi1.JPG" alt="Image 3">
+  <img src="{{site.baseurl}}/images/about/bike.jpeg" alt="Image 4">
+  <img src="{{site.baseurl}}/images/about/rumi2.jpeg" alt="Image 5">
+  <img src="{{site.baseurl}}/images/about/uphill.jpeg" alt="Image 6">
 </div>
