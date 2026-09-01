@@ -7,7 +7,7 @@ comments: true
 
 ## As a conversation Starter
 
-Here are my favorite states I have been to.
+Here are my favorite U.S. states I've been to.
 
 <comment>
 Flags are made using Wikipedia images
