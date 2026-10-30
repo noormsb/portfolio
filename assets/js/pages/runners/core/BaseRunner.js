@@ -19,6 +19,7 @@ export class BaseRunner {
     this.initialCode = '';
     this.currentCode = '';
     this.trackStats = true;
+    this.codeListeners = new Set();
 
     this.storage = new StorageManager(this.storageKey);
     this.stats = new StatsManager(container, { statusSelector: this.statusSelector });
@@ -26,6 +27,7 @@ export class BaseRunner {
       containerId: this.containerId,
       onChange: (code) => {
         this.currentCode = code;
+        this.codeListeners.forEach((listener) => listener(code));
         if (this.trackStats) {
           this.stats.updateFromCode(code);
         }
@@ -41,6 +43,13 @@ export class BaseRunner {
     return this.editorManager.setCodeMirrorHeight(height);
   }
 
+  setOutputHeight(selector, height = '') {
+    if (!height) return;
+    return this.applyScopedStyle(
+      `#${this.containerId} ${selector} { min-height: ${height}; max-height: ${height}; height: ${height}; }`
+    );
+  }
+
   getStoredValue(fallback = '') {
     return this.storage.get(fallback);
   }
@@ -54,7 +63,13 @@ export class BaseRunner {
     trackStats = true,
   } = {}) {
     this.defaultCode = defaultCode ?? '';
-    this.initialCode = this.getStoredValue(this.defaultCode);
+    try {
+      this.initialCode = this.getStoredValue(this.defaultCode);
+    } catch (error) {
+      console.error(`Runner ${this.containerId}: stored source could not be read`, error);
+      this.updateStatus(`Stored source unavailable: ${error.message}`);
+      this.initialCode = this.defaultCode;
+    }
     this.currentCode = this.initialCode || fallbackCode || '';
     this.trackStats = trackStats;
 
@@ -81,9 +96,17 @@ export class BaseRunner {
   setValue(value = '') {
     this.currentCode = value;
     this.editorManager.setValue(value);
+    if (!this.editor) {
+      this.codeListeners.forEach((listener) => listener(value));
+    }
     if (this.trackStats) {
       this.stats.updateFromCode(value);
     }
+  }
+
+  onCodeChange(listener) {
+    this.codeListeners.add(listener);
+    return () => this.codeListeners.delete(listener);
   }
 
   updateStats() {
@@ -107,8 +130,19 @@ export class BaseRunner {
     ButtonFeedback.flash(button, temporaryLabel, duration);
   }
 
-  bindButton(selector, handler) {
-    const button = this.container.querySelector(selector);
+  getHookElement(hookName, fallbackSelector = '') {
+    if (!hookName) {
+      return fallbackSelector ? this.container.querySelector(fallbackSelector) : null;
+    }
+    const byHook = this.container.querySelector(`[data-hook="${hookName}"]`);
+    if (byHook) {
+      return byHook;
+    }
+    return fallbackSelector ? this.container.querySelector(fallbackSelector) : null;
+  }
+
+  bindButton(selector, handler, hookName = '') {
+    const button = this.getHookElement(hookName, selector);
     if (!button) {
       return null;
     }
@@ -128,14 +162,17 @@ export class BaseRunner {
     onClear,
     onSave,
     onCopy,
+    saveAction,
+    canClear,
     clearFeedback = '✔',
     saveFeedback = '✔ Saved',
     copyFeedback = '✔ Copied',
     feedbackDuration = 2000,
   } = {}) {
-    const clearBtn = this.container.querySelector('.clearStorageBtn');
+    const clearBtn = this.getHookElement('clear', '.clearStorageBtn');
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {
+        if (typeof canClear === 'function' && !canClear()) return;
         this.clearStorage();
         this.setValue(resetValue || '');
         if (typeof onClear === 'function') {
@@ -145,18 +182,30 @@ export class BaseRunner {
       });
     }
 
-    const saveBtn = this.container.querySelector('.saveBtn');
+    const saveBtn = this.getHookElement('save', '.saveBtn');
     if (saveBtn) {
-      saveBtn.addEventListener('click', () => {
-        this.saveToStorage();
-        if (typeof onSave === 'function') {
-          onSave();
+      saveBtn.addEventListener('click', async () => {
+        saveBtn.disabled = true;
+        try {
+          if (typeof saveAction === 'function') {
+            await saveAction();
+          } else {
+            this.saveToStorage();
+          }
+          if (typeof onSave === 'function') {
+            await onSave();
+          }
+          this.flashButton(saveBtn, saveFeedback, feedbackDuration);
+        } catch (error) {
+          console.error(`Runner ${this.containerId}: save failed`, error);
+          this.updateStatus(`Save failed: ${error.message}`);
+        } finally {
+          saveBtn.disabled = false;
         }
-        this.flashButton(saveBtn, saveFeedback, feedbackDuration);
       });
     }
 
-    const copyBtn = this.container.querySelector('.copyBtn');
+    const copyBtn = this.getHookElement('copy', '.copyBtn');
     if (copyBtn) {
       copyBtn.addEventListener('click', () => {
         const code = this.getValue();
